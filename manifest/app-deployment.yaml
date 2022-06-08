@@ -1,0 +1,113 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookings
+  namespace: bookings
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      id: bookings
+  template:
+    metadata:
+      labels:
+        id: bookings
+        network-policy: bookings-policy
+    spec:
+      schedulerName: stork
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "id"
+                  operator: In
+                  values:
+                  - bookings
+            topologyKey: "kubernetes.io/hostname"
+            #topologyKey: topology.kubernetes.io/zone
+      initContainers:
+      - name: init-bookings
+        image: docker.io/calvarado2004/bookings:latest
+        env:
+        - name: DB_SERVER
+          value: "pgpool-svc"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_NAME
+          value: "bookings"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: postgresql-password
+        command: ['sh', '-c', "cd /app && export DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/$DB_NAME && /usr/local/bin/soda create -e production || true && /usr/local/bin/soda migrate -e production" ]
+      containers:
+      - name: bookings
+        image: docker.io/calvarado2004/bookings:latest
+        env:
+        - name: DB_SERVER
+          value: "pgpool-svc"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_NAME
+          value: "bookings"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: postgresql-password
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -ec
+              - 'wget --no-verbose --tries=1 --spider http://127.0.0.1:8080/bookings|| exit 1'
+          initialDelaySeconds: 7
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+        readinessProbe:
+          exec:
+            command:
+              - sh
+              - -ec
+              - 'wget --no-verbose --tries=1 --spider http://127.0.0.1:8080/bookings || exit 1'
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookings-svc
+  namespace: bookings
+spec:
+  type: NodePort
+  sessionAffinity: None
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
+  selector:
+    id: bookings
