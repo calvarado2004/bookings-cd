@@ -7,6 +7,12 @@ metadata:
     nginx.ingress.kubernetes.io/app-root: /bookings
     nginx.ingress.kubernetes.io/add-base-url: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /bookings/$2
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "balanced"
+    nginx.ingress.kubernetes.io/session-cookie-name: "bookings-cookie"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "600"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "600"
+    nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
 spec:
   ingressClassName: nginx
   rules:
