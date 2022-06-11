@@ -44,7 +44,7 @@ spec:
             secretKeyRef:
               name: postgres-secrets
               key: postgresql-password
-        command: ['sh', '-c', "cd /app && export DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/$DB_NAME && /usr/local/bin/soda create -e production || true && /usr/local/bin/soda migrate -e production" ]
+        command: ['sh', '-c', "cd /app && export ADMIN_DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/postgres && export DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/$DB_NAME && /usr/local/bin/soda migrate -e admin -p ./admin_migrations && /usr/local/bin/soda migrate -e production" ]
       containers:
       - name: bookings
         image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-8
