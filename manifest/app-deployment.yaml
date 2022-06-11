@@ -29,7 +29,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       initContainers:
       - name: init-bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-7
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-8
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
@@ -47,7 +47,7 @@ spec:
         command: ['sh', '-c', "cd /app && export DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/$DB_NAME && /usr/local/bin/soda create -e production || true && /usr/local/bin/soda migrate -e production" ]
       containers:
       - name: bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-7
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-8
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
