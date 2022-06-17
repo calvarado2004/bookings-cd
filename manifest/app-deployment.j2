@@ -49,6 +49,10 @@ spec:
       - name: bookings
         image: {{ CONTAINER_IMAGE }}:{{ USED_TAG }}
         env:
+        - name: MAILHOG_HOST
+          value: "mailhog-svc"
+        - name: MAILHOG_PORT
+          value: "1025"
         - name: DB_SERVER
           value: "pgpool-svc"
         - name: DB_PORT

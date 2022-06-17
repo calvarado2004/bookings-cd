@@ -49,6 +49,10 @@ spec:
       - name: bookings
         image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-14
         env:
+        - name: MAILHOG_HOST
+          value: "mailhog-svc"
+        - name: MAILHOG_PORT
+          value: "1025"
         - name: DB_SERVER
           value: "pgpool-svc"
         - name: DB_PORT
