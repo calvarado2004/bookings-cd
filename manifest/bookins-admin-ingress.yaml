@@ -36,3 +36,17 @@ spec:
                 name: bookings-svc
                 port:
                   number: 8080
+          - path: /bookings(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: bookings-svc
+                port: 
+                  number: 8080
+          - path: /bookings
+            pathType: Prefix
+            backend:
+              service:
+                name: bookings-svc
+                port:
+                  number: 8080
