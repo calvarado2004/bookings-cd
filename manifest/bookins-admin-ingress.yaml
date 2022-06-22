@@ -4,10 +4,10 @@ metadata:
   name: bookings-admin-ingress
   namespace: bookings
   annotations:
-    #nginx.ingress.kubernetes.io/app-root: /bookings-admin
+    nginx.ingress.kubernetes.io/app-root: /bookings
     nginx.ingress.kubernetes.io/add-base-url: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /bookings/$2
-    nginx.ingress.kubernetes.io/rewrite-target: /bookings-admin/$2
+    #nginx.ingress.kubernetes.io/rewrite-target: /bookings-admin/$2
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/affinity-mode: "persistent"
     nginx.ingress.kubernetes.io/session-cookie-name: "bookings-cookie"
@@ -16,27 +16,13 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
     nginx.ingress.kubernetes.io/session-cookie-path: "/bookings"
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
-    #nginx.ingress.kubernetes.io/session-cookie-samesite: Strict
+    nginx.ingress.kubernetes.io/session-cookie-samesite: Strict
 spec:
   ingressClassName: nginx
   rules:
     - host: worker1.calvarado04.com
       http:
         paths:
-          - path: /bookings-admin(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: bookings-svc
-                port: 
-                  number: 8080
-          - path: /bookings-admin
-            pathType: Prefix
-            backend:
-              service:
-                name: bookings-svc
-                port:
-                  number: 8080
           - path: /bookings(/|$)(.*)
             pathType: Prefix
             backend:
@@ -45,6 +31,20 @@ spec:
                 port: 
                   number: 8080
           - path: /bookings
+            pathType: Prefix
+            backend:
+              service:
+                name: bookings-svc
+                port:
+                  number: 8080
+          - path: /bookings-admin(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: bookings-svc
+                port: 
+                  number: 8080
+          - path: /bookings-admin
             pathType: Prefix
             backend:
               service:
