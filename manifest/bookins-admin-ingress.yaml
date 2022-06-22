@@ -37,17 +37,3 @@ spec:
                 name: bookings-svc
                 port:
                   number: 8080
-          - path: /bookings-admin(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: bookings-svc
-                port: 
-                  number: 8080
-          - path: /bookings-admin
-            pathType: Prefix
-            backend:
-              service:
-                name: bookings-svc
-                port:
-                  number: 8080
