@@ -29,7 +29,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       initContainers:
       - name: init-bookings
-        image: docker.io/calvarado2004/bookings-init:jenkins-bookings-ci-26
+        image: {{ CONTAINER_IMAGE }}-init:{{ USED_TAG }}
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
@@ -44,10 +44,10 @@ spec:
             secretKeyRef:
               name: postgres-secrets
               key: postgresql-password
-        command: ['sh', '-c', '/app/migrations.sh' ]
+        command: ['sh', '-c', "/app/migrations.sh" ]
       containers:
       - name: bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-26
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-27
         env:
         - name: MAILHOG_HOST
           value: "mailhog-svc"
