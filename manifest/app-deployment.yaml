@@ -28,7 +28,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       initContainers:
       - name: init-bookings
-        image: docker.io/calvarado2004/bookings-init:{{ USED_TAG }}
+        image: docker.io/calvarado2004/bookings-init:latest
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
