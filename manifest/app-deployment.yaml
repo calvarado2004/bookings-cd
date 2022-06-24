@@ -29,7 +29,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       initContainers:
       - name: init-bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-26
+        image: docker.io/calvarado2004/bookings-init:jenkins-bookings-ci-26
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
@@ -44,7 +44,7 @@ spec:
             secretKeyRef:
               name: postgres-secrets
               key: postgresql-password
-        command: ['sh', '-c', "cd /app && export ADMIN_DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/postgres && export DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@$DB_SERVER:$DB_PORT/$DB_NAME && /usr/local/bin/soda migrate -e admin -p ./admin_migrations status && /usr/local/bin/soda migrate -e admin -p ./admin_migrations up && /usr/local/bin/soda migrate -e production up" ]
+        command: ['sh', '-c', '/app/migrations.sh' ]
       containers:
       - name: bookings
         image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-26
