@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,7 +28,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       initContainers:
       - name: init-bookings
-        image: {{ CONTAINER_IMAGE }}-init:{{ USED_TAG }}
+        image: docker.io/calvarado2004/bookings-init:{{ USED_TAG }}
         env:
         - name: DB_SERVER
           value: "pgpool-svc"
@@ -47,7 +46,7 @@ spec:
         command: ['sh', '-c', "/app/migrations.sh" ]
       containers:
       - name: bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-27
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-28
         env:
         - name: MAILHOG_HOST
           value: "mailhog-svc"
