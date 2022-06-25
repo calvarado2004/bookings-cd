@@ -107,9 +107,9 @@ spec:
                   - postgres
             topologyKey: "kubernetes.io/hostname"
             #topologyKey: topology.kubernetes.io/zone
-      securityContext:
-        fsGroup: 1000650000
-        fsGroupChangePolicy: "OnRootMismatch"
+      #securityContext:
+      #  fsGroup: 1000650000
+      #  fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - name: postgresql
           lifecycle:
@@ -119,8 +119,8 @@ spec:
                   - /pre-stop.sh
           image: docker.io/bitnami/postgresql-repmgr:13.6.0
           imagePullPolicy: "IfNotPresent"
-          securityContext:
-            runAsUser: 1000650000
+          #securityContext:
+          #  runAsUser: 1000650000
           # Auxiliary vars to populate environment variables
           env:
             - name: BITNAMI_DEBUG
@@ -138,7 +138,7 @@ spec:
                   name: postgres-secrets
                   key: postgresql-password
             - name: POSTGRES_DB
-              value: "bookings"
+              value: "postgres"
             - name: POSTGRESQL_LOG_HOSTNAME
               value: "true"
             - name: POSTGRESQL_LOG_CONNECTIONS
@@ -202,7 +202,7 @@ spec:
               command:
                 - bash
                 - -ec
-                - 'PGPASSWORD=$POSTGRES_PASSWORD psql -w -U "postgres" -d "bookings"  -h 127.0.0.1 -c "SELECT 1"'
+                - 'PGPASSWORD=$POSTGRES_PASSWORD psql -w -U "postgres" -d "postgres"  -h 127.0.0.1 -c "SELECT 1"'
             initialDelaySeconds: 28
             periodSeconds: 10
             timeoutSeconds: 5
@@ -213,7 +213,7 @@ spec:
               command:
                 - bash
                 - -ec
-                - 'PGPASSWORD=$POSTGRES_PASSWORD psql -w -U "postgres" -d "bookings"  -h 127.0.0.1 -c "SELECT 1"'
+                - 'PGPASSWORD=$POSTGRES_PASSWORD psql -w -U "postgres" -d "postgres"  -h 127.0.0.1 -c "SELECT 1"'
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5

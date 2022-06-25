@@ -54,9 +54,9 @@ spec:
         app: pgpool
         network-policy: pgpool-policy
     spec:          
-      securityContext:
-        fsGroup: 1000650000
-        fsGroupChangePolicy: "OnRootMismatch"
+      #securityContext:
+      #  fsGroup: 1000650000
+      #  fsGroupChangePolicy: "OnRootMismatch"
       affinity:
         #Collocate the pod on a node with a postgres pod to maximize performance 
         podAffinity:
@@ -91,8 +91,8 @@ spec:
             limits:
               memory: 1Gi
               cpu: 800m
-          securityContext:
-            runAsUser: 1000650000
+          #securityContext:
+          #  runAsUser: 1000650000
           env:
             - name: BITNAMI_DEBUG
               value: "false"
@@ -106,7 +106,7 @@ spec:
                   name: postgres-secrets
                   key: repmgr-password
             - name: PGPOOL_SR_CHECK_DATABASE
-              value: "bookings"
+              value: "postgres"
             - name: PGPOOL_ENABLE_LDAP
               value: "no"
             - name: PGPOOL_POSTGRES_USERNAME
