@@ -107,9 +107,9 @@ spec:
                   - postgres
             topologyKey: "kubernetes.io/hostname"
             #topologyKey: topology.kubernetes.io/zone
-      #securityContext:
-      #  fsGroup: 1000650000
-      #  fsGroupChangePolicy: "OnRootMismatch"
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - name: postgresql
           lifecycle:
