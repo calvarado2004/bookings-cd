@@ -31,7 +31,7 @@ spec:
         image: docker.io/calvarado2004/bookings-init:latest
         env:
         - name: DB_SERVER
-          value: "postgres-headless-svc"
+          value: "pgpool-svc"
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
@@ -46,7 +46,7 @@ spec:
         command: ['sh', '-c', "/app/migrations.sh" ]
       containers:
       - name: bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-32
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-33
         env:
         - name: MAILHOG_HOST
           value: "mailhog-svc"
