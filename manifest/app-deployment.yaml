@@ -31,7 +31,7 @@ spec:
         image: docker.io/calvarado2004/bookings-init:latest
         env:
         - name: DB_SERVER
-          value: "pgpool-svc"
+          value: "postgres-headless-svc"
         - name: DB_PORT
           value: "5432"
         - name: DB_USER

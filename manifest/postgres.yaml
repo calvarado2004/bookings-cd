@@ -119,8 +119,8 @@ spec:
                   - /pre-stop.sh
           image: docker.io/bitnami/postgresql-repmgr:13.6.0
           imagePullPolicy: "IfNotPresent"
-          #securityContext:
-          #  runAsUser: 1000650000
+          securityContext:
+            runAsUser: 1001
           # Auxiliary vars to populate environment variables
           env:
             - name: BITNAMI_DEBUG
@@ -138,6 +138,15 @@ spec:
                   name: postgres-secrets
                   key: postgresql-password
             - name: POSTGRES_DB
+              value: "postgres"
+            - name: POSTGRESQL_USERNAME
+              value: "postgres"
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: postgresql-password
+            - name: POSTGRESQL_DATABASE
               value: "postgres"
             - name: POSTGRESQL_LOG_HOSTNAME
               value: "true"
