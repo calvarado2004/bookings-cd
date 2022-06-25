@@ -106,7 +106,7 @@ spec:
                   name: postgres-secrets
                   key: repmgr-password
             - name: PGPOOL_SR_CHECK_DATABASE
-              value: "postgres"
+              value: "bookings"
             - name: PGPOOL_ENABLE_LDAP
               value: "no"
             - name: PGPOOL_POSTGRES_USERNAME
