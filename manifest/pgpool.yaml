@@ -82,7 +82,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       containers:
         - name: pgpool
-          image: docker.io/bitnami/pgpool:4.3.1
+          image: docker.io/bitnami/pgpool:4.3.2
           imagePullPolicy: "IfNotPresent"
           resources:
             requests:
