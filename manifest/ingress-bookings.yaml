@@ -18,8 +18,12 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-samesite: Strict
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - kubernetes.lehi-k8s-vanilla.calvarado04.com
+    secretName: vanilla-tls
   rules:
-    - host: k8s-asus.calvarado04.com
+    - host: kubernetes.lehi-k8s-vanilla.calvarado04.com
       http:
         paths:
           - path: /bookings(/|$)(.*)

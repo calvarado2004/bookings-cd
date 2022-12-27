@@ -109,7 +109,7 @@ spec:
             #topologyKey: topology.kubernetes.io/zone
       securityContext:
         fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
+        fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: postgresql
           lifecycle:
