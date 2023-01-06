@@ -27,7 +27,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: mailhog
-        image: docker.io/ajoergensen/mailhog
+        image: mailhog/mailhog
         resources:
           requests:
             cpu: 10m
