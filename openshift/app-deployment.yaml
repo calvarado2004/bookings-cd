@@ -103,7 +103,6 @@ kind: Service
 metadata:
   name: bookings-svc
 spec:
-  type: NodePort
   sessionAffinity: None
   ports:
     - name: http
