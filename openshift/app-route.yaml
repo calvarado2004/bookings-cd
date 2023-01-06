@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: bookings
+  labels:
+    app.kubernetes.io/instance: bookings
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: bookings-bookings.apps.okd.calvarado04.com
+  path: /bookings
+  to:
+    kind: Service
+    name: bookings-svc
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
+  wildcardPolicy: None
