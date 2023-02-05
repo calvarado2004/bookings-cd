@@ -115,8 +115,10 @@ spec:
                   - /pre-stop.sh
           image: docker.io/bitnami/postgresql-repmgr:14.4.0
           imagePullPolicy: "IfNotPresent"
+          # oc adm policy add-scc-to-user anyuid -z default -n bookings
           securityContext:
-            runAsUser: 1001
+            runAsGroup: 0
+            supplementalGroups: [1000]
           # Auxiliary vars to populate environment variables
           env:
             - name: BITNAMI_DEBUG
