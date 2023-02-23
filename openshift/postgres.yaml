@@ -103,10 +103,12 @@ spec:
                   - postgres
             topologyKey: "kubernetes.io/hostname"
             #topologyKey: topology.kubernetes.io/zone
+      # oc adm policy add-scc-to-user anyuid -z default -n bookings
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [1000]
+        runAsGroup: 0
       containers:
         - name: postgresql
           lifecycle:
@@ -116,9 +118,6 @@ spec:
                   - /pre-stop.sh
           image: docker.io/bitnami/postgresql-repmgr:14.4.0
           imagePullPolicy: "IfNotPresent"
-          # oc adm policy add-scc-to-user anyuid -z default -n bookings
-          securityContext:
-            runAsGroup: 0
           # Auxiliary vars to populate environment variables
           env:
             - name: BITNAMI_DEBUG
