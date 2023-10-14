@@ -45,7 +45,7 @@ spec:
         command: ['sh', '-c', "/app/migrations.sh" ]
       containers:
       - name: bookings
-        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-535
+        image: docker.io/calvarado2004/bookings:jenkins-bookings-ci-536
         env:
         - name: MAILHOG_HOST
           value: "mailhog-svc"
